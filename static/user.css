@@ -1,0 +1,27 @@
+.doggy-info {
+    margin:20px 0 20px 0;
+    padding: 20px;
+    background-color: lightgrey;
+    border-radius: 5px;
+}
+
+h4 {
+    text-align: left;
+    margin-bottom:20px;
+}
+
+.dog-plus-btn{
+    text-align: left;
+}
+
+.control {
+    text-align: left;
+}
+
+.notify{
+    font-size: 15px;
+}
+
+.is-hidden{
+    display: none;
+}

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!--오픈 그래프 카카오톡/페이스북    -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="페이지 이름"/>
+    <meta property="og:title" content="페이지 이름 2번째"/>
+    <meta property="og:description" content="페이지 소개"/>
+    <meta property="og:image" content="페이지 이미지 경로"/> <!--<<seo 소셜 네트워크 최적화 이미지 >>-->
+    <meta property="og:url" content="페이지 주소"/>
+    <!--오픈 그래프 트위터    -->
+    <meta property="twitter:card" content="summary"/>
+    <meta property="twitter:site" content="페이지 이름"/>
+    <meta property="twitter:title" content="페이지 이름 2번째"/>
+    <meta property="twitter:description" content="페이지 소개"/>
+    <meta property="twitter:image" content="페이지 이미지 경로"/>
+    <meta property="twitter:url" content="페이지 주소"/>
+    <!-- 로고 이미지   -->
+    <link rel="icon" href="./favicon.png">
+    <!--폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+    <!--아이콘-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <link rel="stylesheet" href="../static/main.css">
+    <!--js연결 -->
+    <!--    <link rel="stylesheet" href="js 경로">-->
+    <!--css연결 -->
+    <!--    <link rel="stylesheet" href="css경로">-->
+
+
+    <style>
+
+        /*이너부분  끝*/
+        .week {
+            height: 250px;
+        {#background-color: orange;#} max-width: 70%;
+            margin: 30px auto 30px;
+            padding-top: 35px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 10px 0px darkseagreen;
+        }
+
+
+        .note {
+            width: 75%;
+            height: 38%;
+            margin: auto auto 50px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        {#background-color: royalblue;#} border-radius: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 10px 0px darkseagreen;
+        }
+
+        .note > div {
+            padding: 15px;
+        }
+
+        .title {
+            display: flex;
+            height: 24px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .h-100 {
+            border-radius: 39px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            {#show_bucket();#}
+        });
+
+        function logout() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃!');
+            window.location.href = "/";
+        }
+    </script>
+
+</head>
+
+<body>
+
+<header>
+    <div class="inner">
+        <!--전체 이너-->
+        <!--검색 바-->
+        <div class="search">
+            <input type="text" placeholder="강아지 이름을 검색해주세요~">
+            <div class="material-icons">search</div>
+        </div>
+        <!--로그인-->
+        <div class="login">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                {% if msg=='logout' %}
+                    <button type="button" class="btn btn-outline-primary"><a href="../login">로그인</a></button>
+                    <button type="button" class="btn btn-outline-primary"><a href="../join">회원가입</a></button>
+                {% else %}
+                    <button type="button" class="btn btn-outline-primary" onclick="logout()">로그아웃</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="week">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="..." class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>First slide label</h5>
+                        <p>Some representative placeholder content for the first slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="..." class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Second slide label</h5>
+                        <p>Some representative placeholder content for the second slide.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="..." class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Third slide label</h5>
+                        <p>Some representative placeholder content for the third slide.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="note">
+        <div class="title">
+            <h1>강아지 자랑~</h1>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for doglist in board %}
+                {% set name = doglist['name'] %}
+                {% set img = doglist['url'] %}
+                {% set comment = doglist['comment'] %}
+                {% set like = doglist['like'] %}
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{{ img }}" class="card-img-top" alt="귀여운 강아지 이미지">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ name }} (하트)X{{ like }}</h5>
+                            <p class="card-text">{{ comment }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+</header>
+
+
+</body>
+</html>
