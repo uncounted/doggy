@@ -67,26 +67,11 @@ def join():
 def search(keyword):
     boards = db.board.find({'dog_name':keyword}, {'_id':False})
 
-    if boards is None:
-        return render_template("index.html")
-    else:
-        return render_template("searching.html", board=boards)
-
     result = checklogin()
     if result == 'logout':
         return render_template("searching.html", msg="logout", board=boards)
     else:
         return render_template("searching.html", userid=result, board=boards)
-
-# @app.route('/search/<keyword>')
-# def search(keyword):
-#     board = db.board.find({'dog_name': keyword}, {'_id':False})
-#
-#     result = checklogin()
-#     if result == 'logout':
-#         return render_template("search.html", msg="logout", board=board)
-#     else:
-#         return render_template("search.html", userid=result, board=board)
 
 @app.route('/api/join', methods=['POST'])
 def api_join():
