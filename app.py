@@ -14,6 +14,7 @@ SECRET_KEY = 'SPARTA'
 ca = certifi.where()
 client = MongoClient('mongodb+srv://test:sparta@cluster0.7eo9i.mongodb.net/Cluster0?retryWrites=true&w=majority',
                      tlsCAFile=ca)
+# client = MongoClient('mongodb+srv://hoholoudly:heyhey11@cluster0.qqm1l.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbdoggy
 
 # 로그인 여부 체크(로그인이 필요한 모든 페이지에서 실행 필요)
@@ -21,8 +22,8 @@ def checklogin():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.user.find_one({"id": payload['id']})
-        return user_info['id']
+        user_info = db.user.find_one({"user_id": payload['id']})
+        return user_info['user_id']
     except jwt.ExpiredSignatureError:
         return "logout"
     except jwt.exceptions.DecodeError:
@@ -81,7 +82,7 @@ def api_join():
         dgender_receive = 'M'
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    db.user.insert_one({'user_id': id_receive, 'pwd': pw_hash, 'user_name': name_receive, 'dog_id':dog_id, 'reg_date':datetime.today()})
+    db.user.insert_one({'user_id': id_receive, 'pwd': pw_hash, 'user_name': name_receive, 'dog_id':dog_id, 'reg_date':datetime.datetime.today()})
     db.dog.insert_one({'user_id':id_receive, 'dog_id':dog_id, 'dog_name':dname_receive, 'dog_age':dage_receive, 'dog_gender':dgender_receive, 'dog_birthday':dbirth_receive})
 
     return jsonify({'result': 'success'})
@@ -103,7 +104,7 @@ def api_login():
     pw_receive = request.form['pw_give']
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
-    result = db.user.find_one({'id': id_receive, 'pw': pw_hash})
+    result = db.user.find_one({'user_id': id_receive, 'pwd': pw_hash})
 
     if result is not None:
         payload = {
@@ -119,4 +120,4 @@ def api_login():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8087, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
