@@ -13,7 +13,7 @@ SECRET_KEY = 'SPARTA'
 
 ca = certifi.where()
 # 비번: sparta 추가 필요
-client = MongoClient('mongodb+srv://test:@cluster0.7eo9i.mongodb.net/Cluster0?retryWrites=true&w=majority',
+client = MongoClient('mongodb+srv://test:sparta@cluster0.7eo9i.mongodb.net/Cluster0?retryWrites=true&w=majority',
                      tlsCAFile=ca)
 # client = MongoClient('mongodb+srv://hoholoudly:heyhey11@cluster0.qqm1l.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbdoggy
@@ -32,21 +32,16 @@ def checklogin():
 
 @app.route('/')
 def home():
+    # board = db.board.find({}, {'_id':False})
+    # for post in board:
+    #     print(post['comment'])
+    boards = db.board.find({}, {'_id': False})
+
     result = checklogin()
     if result == 'logout':
-        return render_template("index.html", msg="logout")
+        return render_template("index.html", msg="logout", board=boards)
     else:
-        return render_template("index.html", userid=result)
-    # token_receive = request.cookies.get('mytoken')
-    # try:
-    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-    #     user_info = db.user.find_one({"id": payload['id']})
-    #     print(user_info['id'])
-    #     return render_template('index.html', userid=user_info['id'], msg='login')
-    # except jwt.ExpiredSignatureError:
-    #     return redirect(url_for("index.html", msg="logout"))
-    # except jwt.exceptions.DecodeError:
-    #     return render_template('index.html', msg='logout')
+        return render_template("index.html", userid=result, board=boards)
 
 @app.route('/login')
 def login():
@@ -64,9 +59,34 @@ def join():
     else:
         return render_template('join.html', msg='login')
 
-@app.route('/logout')
-def logout():
-    return render_template('index.html', msg='logout')
+# @app.route('/logout')
+# def logout():
+#     return render_template('index.html', msg='logout')
+
+@app.route('/searching/<keyword>')
+def search(keyword):
+    boards = db.board.find({'dog_name':keyword}, {'_id':False})
+
+    if boards is None:
+        return render_template("index.html")
+    else:
+        return render_template("searching.html", board=boards)
+
+    result = checklogin()
+    if result == 'logout':
+        return render_template("searching.html", msg="logout", board=boards)
+    else:
+        return render_template("searching.html", userid=result, board=boards)
+
+# @app.route('/search/<keyword>')
+# def search(keyword):
+#     board = db.board.find({'dog_name': keyword}, {'_id':False})
+#
+#     result = checklogin()
+#     if result == 'logout':
+#         return render_template("search.html", msg="logout", board=board)
+#     else:
+#         return render_template("search.html", userid=result, board=board)
 
 @app.route('/api/join', methods=['POST'])
 def api_join():
@@ -121,4 +141,4 @@ def api_login():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=8087, debug=True)

@@ -39,11 +39,6 @@
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <link rel="stylesheet" href="../static/main.css">
-    <!--js연결 -->
-    <!--    <link rel="stylesheet" href="js 경로">-->
-    <!--css연결 -->
-    <!--    <link rel="stylesheet" href="css경로">-->
-
 
     <style>
 
@@ -86,15 +81,32 @@
     </style>
 
     <script>
-        $(document).ready(function () {
-            {#show_bucket();#}
-        });
 
         function logout() {
             $.removeCookie('mytoken', {path: '/'});
             alert('로그아웃!');
             window.location.href = "/";
         }
+
+        function search(){
+            let search = $('#search').val()
+                console.log(search)
+            if(search==''){
+                alert('값을 입력해주세요')
+            } else {
+                window.location.href = `/searching/${search}`
+            }
+        }
+
+        {#function search(){#}
+        {#    let search = $('#search').val()#}
+        {#    if(search==''){#}
+        {#        alert('값을 입력해주세요')#}
+        {#        return#}
+        {#    } else {#}
+        {#        window.location.href = `/search/${search}`#}
+        {#    }#}
+
     </script>
 
 </head>
@@ -106,8 +118,8 @@
         <!--전체 이너-->
         <!--검색 바-->
         <div class="search">
-            <input type="text" placeholder="강아지 이름을 검색해주세요~">
-            <div class="material-icons">search</div>
+            <input type="text" placeholder="강아지 이름을 검색해주세요~" id="search">
+            <button onclick="search()"><div class="material-icons">search</div></button>
         </div>
         <!--로그인-->
         <div class="login">
@@ -116,7 +128,7 @@
                     <button type="button" class="btn btn-outline-primary"><a href="../login">로그인</a></button>
                     <button type="button" class="btn btn-outline-primary"><a href="../join">회원가입</a></button>
                 {% else %}
-                    <button type="button" class="btn btn-outline-primary"><a href="../update">작성하기</button>
+                    <button type="button" class="btn btn-outline-primary"><a href="../update">작성하기</a></button>
                     <button type="button" class="btn btn-outline-primary" onclick="logout()">로그아웃</button>
                 {% endif %}
             </div>
@@ -175,10 +187,10 @@
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for doglist in board %}
-                {% set name = doglist['name'] %}
-                {% set img = doglist['url'] %}
+                {% set name = doglist['dog_name'] %}
+                {% set img = doglist['img1'] %}
                 {% set comment = doglist['comment'] %}
-                {% set like = doglist['like'] %}
+                {% set like = doglist['likes_cnt'] %}
                 <div class="col">
                     <div class="card h-100">
                         <img src="{{ img }}" class="card-img-top" alt="귀여운 강아지 이미지">

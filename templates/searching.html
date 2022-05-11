@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+    <!--아이콘-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../static/main.css">
+
+
+    <style>
+
+        .search_box {
+            margin-top: 100px;
+
+        }
+        .search_box > h1 {
+            font-size: 50px;
+            margin-left: 100px;
+        }
+        .row-cols-1 {
+            margin-left: 130px ;
+            width: 1311px;
+        }
+        .big {
+            color: blueviolet;
+        }
+    </style>
+<script>
+
+    function search(){
+        let search = $('#search').val()
+        if(search==''){
+            alert('값을 입력해주세요')
+        } else {
+            window.location.href = `/searching/${search}`
+            }
+        }
+</script>
+</head>
+<body>
+<div class="inner">
+    <!--전체 이너-->
+    <!--검색 바-->
+    <div class="search">
+        <input id="search" type="text" placeholder="강아지 이름을 검색해주세요~">
+        <button class="btn btn-light" onclick="search()">
+            <div class="material-icons">search</div>
+        </button>
+    </div>
+    <!--로그인-->
+    <div class="login">
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button type="button" class="btn btn-outline-primary"><a href="">로그인</a></button>
+            <button type="button" class="btn btn-outline-primary"><a href="">회원가입</a></button>
+        </div>
+    </div>
+
+
+
+</div>
+<div class="search_box">
+{% for doglist in board %}
+<h1>찾은 <span class="big">{{ doglist.dog_name }}</span>입니다 </h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="../static/dog%20.jpg" class="card-img-top" alt="귀여운 강아지 이미지">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.like }}</h5>
+                            <p class="card-text">{{ doglist.comment }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+</div>
+{#{{ doglist.url }}#}
+
+</body>
+</html>
