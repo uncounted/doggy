@@ -12,7 +12,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 SECRET_KEY = 'SPARTA'
 
 ca = certifi.where()
-client = MongoClient('mongodb+srv://test:sparta@cluster0.7eo9i.mongodb.net/Cluster0?retryWrites=true&w=majority',
+client = MongoClient('mongodb+srv://test:@cluster0.7eo9i.mongodb.net/Cluster0?retryWrites=true&w=majority',
                      tlsCAFile=ca)
 # client = MongoClient('mongodb+srv://hoholoudly:heyhey11@cluster0.qqm1l.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
 db = client.dbdoggy
