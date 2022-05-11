@@ -125,5 +125,100 @@ def api_login():
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
+
+@app.route('/update')
+def view_update():
+    user_id = checklogin()
+
+    usersdog_list = list()
+
+    postings = list(db.dog.find({'user_id': user_id}, {'_id': False}))
+    my_dog=postings[0]['dog_name']
+    print(my_dog)
+
+    if user_id:
+        return render_template("update.html", my_dog=my_dog)
+    elif user_id is None:
+        return jsonify({'msg': '로그 아웃 되었습니다. '})
+
+@app.route('/modify/<key>')
+def view_modify(key):
+    postings = list(db.board.find({'post_id': int(key)}, {'_id': False}))
+    # print(postings[0]["comment"])
+
+    return render_template("modify.html", postings=postings)
+
+
+@app.route('/api/post/update', methods=['POST'])
+def post_update():
+    user_id = checklogin()
+    doggyname_receive = request.form["doggyname_give"]
+    postingdoggy_receive = request.form["postingdoggy_give"]
+
+    file = request.files["file_give"]
+    extension = file.filename.split('.')[-1]
+    today = datetime.datetime.now()
+    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+    reg_date = today.strftime('%Y-%m-%d')
+    post_id = today.strftime('%Y%m%d%H%M%S')
+
+    filename = f'file-{mytime}'
+    save_to = f'static/{filename}.{extension}'
+
+    file.save(save_to)
+
+    doc = {
+        'img1': f'{filename}.{extension}',
+        'comment': postingdoggy_receive,
+        'dog_name': doggyname_receive,
+        'user_id': user_id,
+        'likes_cnt': 0,
+        'post_id': int(post_id),
+        'reg_date': reg_date,
+        'mod_date': "",
+    }
+    db.board.insert_one(doc)
+
+    return jsonify({'msg': '저장완료'})
+
+
+@app.route('/api/post/delete', methods=['POST'])
+def post_delete():
+    post_id_receive = int(request.form["post_id_give"])
+    print(post_id_receive)
+    db.board.delete_one({'post_id': post_id_receive})
+    return jsonify({'result': 'success', 'msg': '게시물이 삭제되었습니다'})
+
+
+@app.route('/api/post/modify', methods=['POST'])
+def post_modify():
+
+    post_id_receive = request.form["post_id_give"]
+    posting_doggy_receive = request.form["posting_doggy_give"]
+
+    today = datetime.datetime.now()
+    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+    modi_date = today.strftime('%Y-%m-%d')
+
+    try:
+        file = request.files["file_give"]
+        extension = file.filename.split('.')[-1]
+        filename = f'file-{mytime}'
+        save_to = f'static/{filename}.{extension}'
+        file.save(save_to)
+        print(post_id_receive)
+        db.board.update_one({'post_id': int(post_id_receive)},
+                            {'$set': {'comment': posting_doggy_receive}})
+        db.board.update_one({'post_id': int(post_id_receive)},
+                            {'$set': {'img1': f'{filename}.{extension}'}})
+        db.board.update_one({'post_id': int(post_id_receive)},
+                            {'$set': {'mod_date': modi_date}})
+    except IOError:
+        print("파일 이즈 논")
+        db.board.update_one({'comment': posting_doggy_receive}, {'$set': {'post_id': int(post_id_receive)}})
+        db.board.update_one({'mod_date': modi_date}, {'$set': {'post_id': int(post_id_receive)}})
+
+    return jsonify({'result': 'success', 'msg': '게시물이 수정되었습니다'})
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=8087, debug=True)

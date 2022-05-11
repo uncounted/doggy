@@ -37,7 +37,6 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-
     <link rel="stylesheet" href="../static/main.css">
 
     <style>
@@ -88,24 +87,36 @@
             window.location.href = "/";
         }
 
-        function search(){
+        function search() {
             let search = $('#search').val()
-                console.log(search)
-            if(search==''){
+            console.log(search)
+            if (search == '') {
                 alert('값을 입력해주세요')
             } else {
                 window.location.href = `/searching/${search}`
             }
         }
 
-        {#function search(){#}
-        {#    let search = $('#search').val()#}
-        {#    if(search==''){#}
-        {#        alert('값을 입력해주세요')#}
-        {#        return#}
-        {#    } else {#}
-        {#        window.location.href = `/search/${search}`#}
-        {#    }#}
+        function delete_posting(post_id) {
+            let postid = post_id
+
+            $.ajax({
+                type: "POST",
+                url: '/api/post/delete',
+                data: {
+                    post_id_give: postid
+                },
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.href = "/"
+                }
+            });
+
+        }
+
+        function modify_posting(post_id) {
+            window.location.href = `/modify/${post_id}`
+        }
 
     </script>
 
@@ -119,7 +130,9 @@
         <!--검색 바-->
         <div class="search">
             <input type="text" placeholder="강아지 이름을 검색해주세요~" id="search">
-            <button onclick="search()"><div class="material-icons">search</div></button>
+            <button onclick="search()">
+                <div class="material-icons">search</div>
+            </button>
         </div>
         <!--로그인-->
         <div class="login">
@@ -181,29 +194,36 @@
         </div>
     </div>
 
+
     <div class="note">
         <div class="title">
             <h1>강아지 자랑~</h1>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             {% for doglist in board %}
-                {% set name = doglist['dog_name'] %}
-                {% set img = doglist['img1'] %}
-                {% set comment = doglist['comment'] %}
-                {% set like = doglist['likes_cnt'] %}
                 <div class="col">
                     <div class="card h-100">
-                        <img src="{{ img }}" class="card-img-top" alt="귀여운 강아지 이미지">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ name }} (하트)X{{ like }}</h5>
-                            <p class="card-text">{{ comment }}</p>
-                        </div>
+                        <div class="container_image">
+                            <img src="../static/{{ doglist.img1 }}" style="width: 200px; height: 200px;"
+                                 class="card-img-top"></div>
                     </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.likes_cnt }}</h5>
+                        <p class="card-text">{{ doglist.comment }}</p>
+                    </div>
+{#                    {% if msg=='login' %}#}
+                        <div>
+                            <button onclick="modify_posting('{{ doglist.post_id }}')">수정</button>
+                        </div>
+                        <div>
+                            <button onclick="delete_posting('{{ doglist.post_id }}')">삭제</button>
+                        </div>
+{#                    {% endif %}#}
+                </div>
+
                 </div>
             {% endfor %}
-        </div>
     </div>
-
 
 </header>
 
