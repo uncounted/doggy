@@ -73,12 +73,16 @@ def api_join():
     name_receive = request.form['name_give']
     dname_receive = request.form['dname_give']
     dage_receive = request.form['dage_give']
-    dgender_receive = request.form['dgender_give']
     dbirth_receive = request.form['dbirth_give']
-
+    dog_id = str(datetime.datetime.now()).replace('-','').replace(' ','').replace(':', '').replace('.', '')
+    if request.form['dgender_give'] =='암컷':
+        dgender_receive = 'F'
+    else:
+        dgender_receive = 'M'
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    db.user.insert_one({'id': id_receive, 'pw': pw_hash, 'name': name_receive, 'dog_name':dname_receive, 'dog_age':dage_receive, 'dog_gender':dgender_receive, 'dog_birthday':dbirth_receive})
+    db.user.insert_one({'user_id': id_receive, 'pwd': pw_hash, 'user_name': name_receive, 'dog_id':dog_id, 'reg_date':datetime.today()})
+    db.dog.insert_one({'user_id':id_receive, 'dog_id':dog_id, 'dog_name':dname_receive, 'dog_age':dage_receive, 'dog_gender':dgender_receive, 'dog_birthday':dbirth_receive})
 
     return jsonify({'result': 'success'})
 
@@ -115,4 +119,4 @@ def api_login():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=8087, debug=True)
