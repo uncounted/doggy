@@ -74,7 +74,7 @@ def api_join():
     dname_receive = request.form['dname_give']
     dage_receive = request.form['dage_give']
     dbirth_receive = request.form['dbirth_give']
-    dog_id = str(datetime.datetime.now()).replace('-','').replace(' ','').replace(':', '').replace('.', '')
+    dog_id = str(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
     if request.form['dgender_give'] =='암컷':
         dgender_receive = 'F'
     else:
