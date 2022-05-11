@@ -12,6 +12,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 SECRET_KEY = 'SPARTA'
 
 ca = certifi.where()
+# 비번: sparta 추가 필요
 client = MongoClient('mongodb+srv://test:@cluster0.7eo9i.mongodb.net/Cluster0?retryWrites=true&w=majority',
                      tlsCAFile=ca)
 # client = MongoClient('mongodb+srv://hoholoudly:heyhey11@cluster0.qqm1l.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
