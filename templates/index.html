@@ -102,13 +102,12 @@
             }
         }
 
-        $(function() {
-            $("#search").keydown(function (e) {
-                console.log('aa')
-                if (e.keyCode == 13) {
-                    $('#searchIcon').click()
-                }
-            });
+        $(function(){$("#search").keydown(function(e) {
+            console.log('aa')
+   			if (e.keyCode == 13) {
+                $('#searchIcon').click()
+   			}
+		});
         })
         
         function delete_posting(post_id) {
