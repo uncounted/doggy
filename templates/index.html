@@ -79,19 +79,25 @@
 
         .w-100 {
             margin: auto;
-            max-height:250px;
-            width:auto !important;
+            max-height: 250px;
+            width: auto !important;
+        }
+
+        .card-img-top {
+            border-top-left-radius: calc(2.25rem - 1px);
+            border-top-right-radius: calc(2.25rem - 1px);
         }
     </style>
 
     <script>
-
+        {#로그아웃#}
         function logout() {
             $.removeCookie('mytoken', {path: '/'});
             alert('로그아웃!');
             window.location.href = "/";
         }
-
+        {#로그아웃#}
+        {#서치 시작#}
         function search() {
             let search = $('#search').val()
             console.log(search)
@@ -101,15 +107,8 @@
                 window.location.href = `/searching/${search}`
             }
         }
-
-        $(function(){$("#search").keydown(function(e) {
-            console.log('aa')
-   			if (e.keyCode == 13) {
-                $('#searchIcon').click()
-   			}
-		});
-        })
-        
+        {#서치 끝#}
+        {#포스팅 함수#}
         function delete_posting(post_id) {
             let postid = post_id
 
@@ -130,8 +129,8 @@
         function modify_posting(post_id) {
             window.location.href = `/modify/${post_id}`
         }
-
-        $(function(){
+        {#포스팅 함수 끝#}
+        $(function () {
             $('.carousel-item').first().addClass('active')
         })
 
@@ -147,7 +146,7 @@
         <!--검색 바-->
         <div class="search">
             <input type="text" placeholder="강아지 이름을 검색해주세요~" id="search">
-            <button onclick="search()" id="searchIcon">
+            <button onclick="search()">
                 <div class="material-icons">search</div>
             </button>
         </div>
@@ -178,10 +177,10 @@
             <div class="carousel-inner" id="rank-parent">
                 {% for post in ranking %}
                     <div class="carousel-item">
-                        <img src="../static/{{post.img1}}" class="d-block w-100" alt="...">
+                        <img src="../static/{{ post.img1 }}" class="d-block w-100" alt="...">
                         <div class="carousel-caption d-none d-md-block">
-                            <h5>{{ post.dog_name}}</h5>
-                            <p>{{ post.comment}}</p>
+                            <h5>{{ post.dog_name }}</h5>
+                            <p>{{ post.comment }}</p>
                         </div>
                     </div>
                 {% endfor %}
@@ -209,27 +208,26 @@
                 <div class="col">
                     <div class="card h-100">
                         <div class="container_image">
-                            <img src="../static/{{ doglist.img1 }}" style="width: 200px; height: 200px;"
+                            <img src="../static/{{ doglist.img1 }}" style="max-width: 100%; height: 200px;"
                                  class="card-img-top">
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.likes_cnt }}</h5>
                             <p class="card-text">{{ doglist.comment }}</p>
                         </div>
-                    {% if doglist.user_id == userid %}
-                        <div>
-                            <button onclick="modify_posting('{{ doglist.post_id }}')">수정</button>
-                        </div>
-                        <div>
-                            <button onclick="delete_posting('{{ doglist.post_id }}')">삭제</button>
-                        </div>
-                    {% endif %}
+                        {% if doglist.user_id == userid %}
+                            <div>
+                                <button onclick="modify_posting('{{ doglist.post_id }}')">수정</button>
+                            </div>
+                            <div>
+                                <button onclick="delete_posting('{{ doglist.post_id }}')">삭제</button>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-
 </header>
 
 
