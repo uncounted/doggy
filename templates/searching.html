@@ -39,6 +39,17 @@
         .big {
             color: blueviolet;
         }
+        .search_out {
+            font-size: 100px;
+            display: flex;
+        }
+        .search_out > h1 {
+            color: darkorchid;
+        }
+        .search_boxing {
+            width: auto;
+            height: 350px;
+        }
     </style>
 <script>
     function logout() {
@@ -87,7 +98,13 @@
 <div class="search_box">
 
 {% if board == 'empty' %}
-    <span>검색 결과가 없습니다.</span>
+    <div class="search_up">
+        <span class="search_out">
+           <br> 찾으시는
+            <h1>강아지</h1><br>가 없어요~~.</span>
+    <div class="search_boxing"></div>
+    </div>
+
 {% else %}
     {% for doglist in board %}
                 <h1>찾은 <span class="big">{{ doglist.dog_name }}</span>입니다 </h1>
@@ -106,7 +123,7 @@
 {% endif %}
 
 </div>
-{#{{ doglist.url }}#}
+
 
 </body>
 </html>
