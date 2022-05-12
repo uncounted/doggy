@@ -210,7 +210,7 @@
                         <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.likes_cnt }}</h5>
                         <p class="card-text">{{ doglist.comment }}</p>
                     </div>
-                    {% if msg=='login' %}
+                    {% if doglist.user_id == userid %}
                         <div>
                             <button onclick="modify_posting('{{ doglist.post_id }}')">수정</button>
                         </div>

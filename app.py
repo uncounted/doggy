@@ -60,7 +60,9 @@ def join():
 @app.route('/searching/<keyword>')
 def search(keyword):
     boards = db.board.find({'dog_name':keyword}, {'_id':False})
-    print(boardsg)
+    
+    print(boards)
+
     for post in boards:
         print(post['dog_name'])
         if post is None:
@@ -220,4 +222,4 @@ def post_modify():
     return jsonify({'result': 'success', 'msg': '게시물이 수정되었습니다'})
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8087, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
