@@ -221,7 +221,7 @@ def post_modify():
 @app.route('/api/likes/update', methods=['POST'])
 def update_like():
     user_info = request.form["user_id_give"]
-    post_id_receive = request.form["post_id_give"]
+    post_id_receive = int(request.form["post_id_give"])
 
     doc = {
         "post_id": post_id_receive,
@@ -255,4 +255,4 @@ def update_like():
     return render_template("index.html")
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=8086, debug=True)
