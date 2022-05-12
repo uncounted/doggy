@@ -156,6 +156,24 @@
             $('.carousel-item').first().addClass('active')
         })
 
+        function like_up(post_id, user_id) {
+            let post = post_id
+            let user = user_id
+            console.log(post, user)
+            $.ajax({
+                type: "POST",
+                url: "/api/likes/update",
+                data: {
+                    post_id_give: post,
+                    user_id_give: user,
+                },
+                success: function (response) {
+                    window.location.reload()
+                }
+            });
+        }
+
+
     </script>
 
 </head>
@@ -234,7 +252,8 @@
                                  class="card-img-top">
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.likes_cnt }}</h5>
+                            <h5 class="card-title">{{ doglist.dog_name }}</h5>
+                            <h5 class="heart" id="heart" onclick="like_up({{ doglist.post_id }}, '{{ userid }}')">(하트)X{{ doglist.likes_cnt }}</h5>
                             <p class="card-text">{{ doglist.comment }}</p>
                         </div>
                         <div class="btn_gruop">
@@ -252,6 +271,7 @@
             {% endfor %}
         </div>
     </div>
+
 </header>
 
 
