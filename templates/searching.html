@@ -41,6 +41,11 @@
         }
     </style>
 <script>
+    function logout() {
+        $.removeCookie('mytoken', {path: '/'});
+        alert('로그아웃!');
+        window.location.href = "/";
+    }
 
     function search(){
         let search = $('#search').val()
@@ -48,8 +53,8 @@
             alert('값을 입력해주세요')
         } else {
             window.location.href = `/searching/${search}`
-            }
         }
+    }
 </script>
 </head>
 <body>
@@ -65,8 +70,14 @@
     <!--로그인-->
     <div class="login">
         <div class="btn-group" role="group" aria-label="Basic outlined example">
-            <button type="button" class="btn btn-outline-primary"><a href="">로그인</a></button>
-            <button type="button" class="btn btn-outline-primary"><a href="">회원가입</a></button>
+            {% if msg=='logout' %}
+                <button type="button" class="btn btn-outline-primary"><a href="/login">로그인</a></button>
+                <button type="button" class="btn btn-outline-primary"><a href="/join">회원가입</a></button>
+            {% else %}
+                <!-- 작성하기 버튼 추가 -->
+                <button type="button" class="btn btn-outline-primary"><a href="/update">작성하기</button>
+                <button type="button" class="btn btn-outline-primary" onclick="logout()">로그아웃</button>
+            {% endif %}
         </div>
     </div>
 
