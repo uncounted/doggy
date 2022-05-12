@@ -217,5 +217,42 @@ def post_modify():
 
     return jsonify({'result': 'success', 'msg': '게시물이 수정되었습니다'})
 
+# 좋아요 업데이트
+@app.route('/api/likes/update', methods=['POST'])
+def update_like():
+    user_info = request.form["user_id_give"]
+    post_id_receive = request.form["post_id_give"]
+
+    doc = {
+        "post_id": post_id_receive,
+        "user_id": user_info
+    }
+
+
+    db.likes.find({})
+    likes_list = list(db.likes.find({'post_id': post_id_receive}, {'_id': False}))
+    global action
+
+    if not likes_list:                                                                          #like 테이블이 완전히 비어있다면
+        action = 'like'
+    else:                                                                                       #like 테이블에 데이터가 있다면
+        for i in likes_list:                                                                    #좋아요를 눌렀는지 안눌렀는지를 판별
+            if post_id_receive == i['post_id'] and user_info == i['user_id']:
+                action = 'unlike'
+                break
+            else:
+                action = 'like'
+
+    if action == 'unlike':                                                                      #눌렀는지 다시 눌러서 취소했는지
+        db.likes.delete_one(doc)
+    else:
+        db.likes.insert_one(doc)
+
+    print(action)
+    count = db.likes.count_documents({"post_id": post_id_receive})
+    db.board.update_one({"post_id": post_id_receive}, {"$set": {"likes_cnt": count}})
+
+    return render_template("index.html")
+
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=8086, debug=True)
