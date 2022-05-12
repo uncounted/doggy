@@ -103,6 +103,21 @@
             margin-left: 18px;
         }
 
+        #love {
+            font-size: 20px;
+            color: red;
+        }
+
+        #love:hover {
+            transition: 2s;
+            transform: rotateY(180deg);
+        }
+
+        .card-title {
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
     </style>
 
     <script>
@@ -253,7 +268,9 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ doglist.dog_name }}</h5>
-                            <h5 class="heart" id="heart" onclick="like_up({{ doglist.post_id }}, '{{ userid }}')">(하트)X{{ doglist.likes_cnt }}</h5>
+                            <h5 class="heart" id="heart" onclick="like_up({{ doglist.post_id }}, '{{ userid }}')">
+                                <span id="love" class="material-icons" onclick="love()" type="button">favorite
+                                </span>  {{ doglist.likes_cnt }}</h5>
                             <p class="card-text">{{ doglist.comment }}</p>
                         </div>
                         <div class="btn_gruop">
