@@ -202,23 +202,19 @@ def post_modify():
     mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
     modi_date = today.strftime('%Y-%m-%d')
 
-    try:
-        file = request.files["file_give"]
-        extension = file.filename.split('.')[-1]
-        filename = f'file-{mytime}'
-        save_to = f'static/{filename}.{extension}'
-        file.save(save_to)
-        print(post_id_receive)
-        db.board.update_one({'post_id': int(post_id_receive)},
-                            {'$set': {'comment': posting_doggy_receive}})
-        db.board.update_one({'post_id': int(post_id_receive)},
-                            {'$set': {'img1': f'{filename}.{extension}'}})
-        db.board.update_one({'post_id': int(post_id_receive)},
-                            {'$set': {'mod_date': modi_date}})
-    except IOError:
-        print("파일 이즈 논")
-        db.board.update_one({'comment': posting_doggy_receive}, {'$set': {'post_id': int(post_id_receive)}})
-        db.board.update_one({'mod_date': modi_date}, {'$set': {'post_id': int(post_id_receive)}})
+
+    file = request.files["file_give"]
+    extension = file.filename.split('.')[-1]
+    filename = f'file-{mytime}'
+    save_to = f'static/{filename}.{extension}'
+    file.save(save_to)
+    print(post_id_receive)
+    db.board.update_one({'post_id': int(post_id_receive)},
+                        {'$set': {'comment': posting_doggy_receive}})
+    db.board.update_one({'post_id': int(post_id_receive)},
+                        {'$set': {'img1': f'{filename}.{extension}'}})
+    db.board.update_one({'post_id': int(post_id_receive)},
+                        {'$set': {'mod_date': modi_date}})
 
     return jsonify({'result': 'success', 'msg': '게시물이 수정되었습니다'})
 
