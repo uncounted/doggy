@@ -127,23 +127,25 @@ def api_login():
 def view_update():
     user_id = checklogin()
 
-    usersdog_list = list()
-
     postings = list(db.dog.find({'user_id': user_id}, {'_id': False}))
     my_dog=postings[0]['dog_name']
-    print(my_dog)
 
-    if user_id:
-        return render_template("update.html", my_dog=my_dog)
-    elif user_id is None:
+    if user_id == 'logout':
         return jsonify({'msg': '로그 아웃 되었습니다. '})
+    else:
+        return render_template("update.html", my_dog=my_dog)
 
 @app.route('/modify/<key>')
 def view_modify(key):
+    user_id = checklogin()
     postings = list(db.board.find({'post_id': int(key)}, {'_id': False}))
     # print(postings[0]["comment"])
 
-    return render_template("modify.html", postings=postings)
+    if user_id == 'logout':
+        return jsonify({'msg': '로그 아웃 되었습니다. '})
+    else:
+        return render_template("modify.html", postings=postings)
+
 
 
 @app.route('/api/post/update', methods=['POST'])
@@ -174,9 +176,12 @@ def post_update():
         'reg_date': reg_date,
         'mod_date': "",
     }
-    db.board.insert_one(doc)
 
-    return jsonify({'msg': '저장완료'})
+    if user_id == 'logout':
+        return jsonify({'msg': '로그 아웃 되었습니다. '})
+    else:
+        db.board.insert_one(doc)
+        return jsonify({'msg': '저장완료'})
 
 
 @app.route('/api/post/delete', methods=['POST'])
