@@ -24,14 +24,15 @@ body::after {
 .inner {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-end;
     margin: auto;
 }
 
 .search {
     display: flex;
     align-items: flex-end;
+    margin-right: 200px;
 }
 
 .search > input {
@@ -57,3 +58,4 @@ body::after {
     margin-right: 40px;
     margin-top: 20px;
 }
+
