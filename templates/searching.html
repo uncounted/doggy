@@ -28,50 +28,73 @@
             margin-top: 100px;
 
         }
+
         .search_box > h1 {
             font-size: 50px;
             margin-left: 100px;
         }
+
         .row-cols-1 {
-            margin-left: 130px ;
+            margin-left: 130px;
             width: 1311px;
         }
+
         .big {
             color: blueviolet;
         }
+
         .search_out {
             font-size: 100px;
             display: flex;
         }
+
         .search_out > h1 {
             color: darkorchid;
         }
+
         .search_boxing {
             width: auto;
             height: 350px;
         }
-    </style>
-<script>
-    function logout() {
-        $.removeCookie('mytoken', {path: '/'});
-        alert('로그아웃!');
-        window.location.href = "/";
-    }
 
-    function search(){
-        let search = $('#search').val()
-        if(search==''){
-            alert('값을 입력해주세요')
-        } else {
-            window.location.href = `/searching/${search}`
+        .inner > .btn-light {
+            color: #000;
+            background-color: #fbf8f0;
+            border-color: #fbf8f0;
+            margin-top: 21px;
+            display: flex;
+            position: relative;
+            padding: revert;
+            flex-wrap: nowrap;
         }
-    }
-</script>
+    </style>
+    <script>
+        function logout() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃!');
+            window.location.href = "/";
+        }
+
+        function search() {
+            let search = $('#search').val()
+            if (search == '') {
+                alert('값을 입력해주세요')
+            } else {
+                window.location.href = `/searching/${search}`
+            }
+        }
+        function home() {
+            window.location.href = '/'
+        }
+    </script>
 </head>
 <body>
 <div class="inner">
     <!--전체 이너-->
     <!--검색 바-->
+    <button class="btn btn-light" onclick="home()">
+        <span class="material-icons">home</span>
+    </button>
     <div class="search">
         <input id="search" type="text" placeholder="강아지 이름을 검색해주세요~">
         <button class="btn btn-light" onclick="search()">
@@ -93,34 +116,33 @@
     </div>
 
 
-
 </div>
 <div class="search_box">
 
-{% if board == 'empty' %}
-    <div class="search_up">
+    {% if board == 'empty' %}
+        <div class="search_up">
         <span class="search_out">
            <br> 찾으시는
             <h1>강아지</h1><br>가 없어요~~.</span>
-    <div class="search_boxing"></div>
-    </div>
+            <div class="search_boxing"></div>
+        </div>
 
-{% else %}
-    {% for doglist in board %}
-                <h1>찾은 <span class="big">{{ doglist.dog_name }}</span>입니다 </h1>
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="../static/{{ doglist.img1 }}" class="card-img-top" alt="귀여운 강아지 이미지">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.like }}</h5>
-                                    <p class="card-text">{{ doglist.comment }}</p>
-                                </div>
-                            </div>
+    {% else %}
+        {% for doglist in board %}
+            <h1>찾은 <span class="big">{{ doglist.dog_name }}</span>입니다 </h1>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="../static/dog%20.jpg" class="card-img-top" alt="귀여운 강아지 이미지">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.like }}</h5>
+                            <p class="card-text">{{ doglist.comment }}</p>
                         </div>
                     </div>
+                </div>
+            </div>
         {% endfor %}
-{% endif %}
+    {% endif %}
 
 </div>
 
