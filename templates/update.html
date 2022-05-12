@@ -106,6 +106,16 @@
             window.location.href = "/";
         }
 
+        function search() {
+            let search = $('#search').val()
+            console.log(search)
+            if (search == '') {
+                alert('값을 입력해주세요')
+            } else {
+                window.location.href = `/searching/${search}`
+            }
+        }
+
         function post_update() {
             let doggy_name = $('#dog_name').val()
             let posting_doggy = $('#boast_doggy').val()

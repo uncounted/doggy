@@ -87,7 +87,9 @@
 <div class="search_box">
 
 {% if board == 'empty' %}
-        {% for doglist in board %}
+    <span>검색 결과가 없습니다.</span>
+{% else %}
+    {% for doglist in board %}
                 <h1>찾은 <span class="big">{{ doglist.dog_name }}</span>입니다 </h1>
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col">
@@ -101,8 +103,6 @@
                         </div>
                     </div>
         {% endfor %}
-{% else %}
-    <span>검색 결과가 없습니다.</span>
 {% endif %}
 
 </div>
