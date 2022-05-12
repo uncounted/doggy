@@ -32,16 +32,14 @@ def checklogin():
 
 @app.route('/')
 def home():
-    # board = db.board.find({}, {'_id':False})
-    # for post in board:
-    #     print(post['comment'])
     boards = db.board.find({}, {'_id': False})
+    ranking = db.board.find().sort("likes_cnt", -1).limit(3)
 
     result = checklogin()
     if result == 'logout':
-        return render_template("index.html", msg="logout", board=boards)
+        return render_template("index.html", msg="logout", board=boards, ranking=ranking)
     else:
-        return render_template("index.html", userid=result, board=boards)
+        return render_template("index.html", userid=result, board=boards, ranking=ranking)
 
 @app.route('/login')
 def login():
@@ -58,10 +56,6 @@ def join():
         return render_template('join.html', msg='logout')
     else:
         return render_template('join.html', msg='login')
-
-# @app.route('/logout')
-# def logout():
-#     return render_template('index.html', msg='logout')
 
 @app.route('/searching/<keyword>')
 def search(keyword):
