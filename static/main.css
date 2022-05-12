@@ -43,9 +43,12 @@ body::after {
 }
 
 .material-icons {
-    font-size: 30px;
+    font-size: 40px;
 }
-
+.search > button:not(:disabled) {
+    cursor: pointer;
+    display: contents;
+}
 .search > input:hover {
     box-shadow: royalblue;
 }
@@ -54,4 +57,3 @@ body::after {
     margin-right: 40px;
     margin-top: 20px;
 }
-

@@ -87,6 +87,15 @@
             border-top-left-radius: calc(2.25rem - 1px);
             border-top-right-radius: calc(2.25rem - 1px);
         }
+
+        .btn_gruop {
+            display: grid;
+            grid-auto-flow: column;
+            margin-right: 10px;
+            margin-left: 10px;
+            padding: 10px;
+        }
+
     </style>
 
     <script>
@@ -215,14 +224,16 @@
                             <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.likes_cnt }}</h5>
                             <p class="card-text">{{ doglist.comment }}</p>
                         </div>
-                        {% if doglist.user_id == userid %}
-                            <div>
-                                <button onclick="modify_posting('{{ doglist.post_id }}')">수정</button>
-                            </div>
-                            <div>
-                                <button onclick="delete_posting('{{ doglist.post_id }}')">삭제</button>
-                            </div>
-                        {% endif %}
+                        <div class="btn_gruop">
+                            {% if doglist.user_id == userid %}
+                                <button onclick="modify_posting('{{ doglist.post_id }}')"
+                                        class="btn btn-outline-primary">수정하기
+                                </button>
+                                <button onclick="delete_posting('{{ doglist.post_id }}')"
+                                        class="btn btn-outline-primary">삭제하기
+                                </button>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% endfor %}
