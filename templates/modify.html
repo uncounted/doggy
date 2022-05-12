@@ -43,6 +43,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <link rel="stylesheet" href="../static/main.css">
     <!--js연결 -->
@@ -99,6 +100,12 @@
     </style>
 
     <script>
+        function logout() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃!');
+            window.location.href = "/";
+        }
+
         function post_update(post_id, not_posting) {
             let postid = post_id
             let posting_doggy = $('#boast_doggy').val()
@@ -144,16 +151,18 @@
         <!--전체 이너-->
         <!--검색 바-->
         <div class="search">
-            <input type="text" placeholder="강아지 이름을 검색해주세요~">
-            <div class="material-icons">search</div>
+            <input id="search" type="text" placeholder="강아지 이름을 검색해주세요~">
+            <button class="btn btn-light" onclick="search()">
+                <div class="material-icons">search</div>
+            </button>
         </div>
         <div class="login">
             <div class="btn-group" role="group" aria-label="Basic outlined example">
                 {% if msg=='logout' %}
-                    <button type="button" class="btn btn-outline-primary"><a href="/login">로그인</a></button>
-                    <button type="button" class="btn btn-outline-primary"><a href="/join">회원가입</a></button>
+                    <button type="button" class="btn btn-outline-primary"><a href="../login">로그인</a></button>
+                    <button type="button" class="btn btn-outline-primary"><a href="../join">회원가입</a></button>
                 {% else %}
-                    <button type="button" class="btn btn-outline-primary"><a href="/update">작성하기</a></button>
+                    <button type="button" class="btn btn-outline-primary"><a href="../update">작성하기</a></button>
                     <button type="button" class="btn btn-outline-primary" onclick="logout()">로그아웃</button>
                 {% endif %}
             </div>

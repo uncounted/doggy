@@ -71,11 +71,11 @@
     <div class="login">
         <div class="btn-group" role="group" aria-label="Basic outlined example">
             {% if msg=='logout' %}
-                <button type="button" class="btn btn-outline-primary"><a href="/login">로그인</a></button>
-                <button type="button" class="btn btn-outline-primary"><a href="/join">회원가입</a></button>
+                <button type="button" class="btn btn-outline-primary"><a href="../../login">로그인</a></button>
+                <button type="button" class="btn btn-outline-primary"><a href="../../join">회원가입</a></button>
             {% else %}
                 <!-- 작성하기 버튼 추가 -->
-                <button type="button" class="btn btn-outline-primary"><a href="/update">작성하기</button>
+                <button type="button" class="btn btn-outline-primary"><a href="../../update">작성하기</a></button>
                 <button type="button" class="btn btn-outline-primary" onclick="logout()">로그아웃</button>
             {% endif %}
         </div>
@@ -85,20 +85,26 @@
 
 </div>
 <div class="search_box">
-{% for doglist in board %}
-<h1>찾은 <span class="big">{{ doglist.dog_name }}</span>입니다 </h1>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
-                    <div class="card h-100">
-                        <img src="../static/dog%20.jpg" class="card-img-top" alt="귀여운 강아지 이미지">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.like }}</h5>
-                            <p class="card-text">{{ doglist.comment }}</p>
+
+{% if board == 'empty' %}
+        {% for doglist in board %}
+                <h1>찾은 <span class="big">{{ doglist.dog_name }}</span>입니다 </h1>
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="../static/dog%20.jpg" class="card-img-top" alt="귀여운 강아지 이미지">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.like }}</h5>
+                                    <p class="card-text">{{ doglist.comment }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+        {% endfor %}
+{% else %}
+    <span>검색 결과가 없습니다.</span>
+{% endif %}
+
 </div>
 {#{{ doglist.url }}#}
 
