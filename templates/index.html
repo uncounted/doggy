@@ -46,10 +46,8 @@
             height: 250px;
             max-width: 70%;
             margin: 30px auto 30px;
-            padding-top: 35px;
             border-radius: 20px;
             box-shadow: 0px 0px 10px 0px darkseagreen;
-            {#overflow: hidden;#}
         }
 
 
@@ -80,9 +78,9 @@
         }
 
         .w-100 {
-            width: 40%!important;
             margin: auto;
-            padding: inherit;
+            max-height:250px;
+            width:auto !important;
         }
     </style>
 
@@ -104,6 +102,15 @@
             }
         }
 
+        $(function() {
+            $("#search").keydown(function (e) {
+                console.log('aa')
+                if (e.keyCode == 13) {
+                    $('#searchIcon').click()
+                }
+            });
+        })
+        
         function delete_posting(post_id) {
             let postid = post_id
 
@@ -141,7 +148,7 @@
         <!--검색 바-->
         <div class="search">
             <input type="text" placeholder="강아지 이름을 검색해주세요~" id="search">
-            <button onclick="search()">
+            <button onclick="search()" id="searchIcon">
                 <div class="material-icons">search</div>
             </button>
         </div>
@@ -204,12 +211,12 @@
                     <div class="card h-100">
                         <div class="container_image">
                             <img src="../static/{{ doglist.img1 }}" style="width: 200px; height: 200px;"
-                                 class="card-img-top"></div>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.likes_cnt }}</h5>
-                        <p class="card-text">{{ doglist.comment }}</p>
-                    </div>
+                                 class="card-img-top">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.likes_cnt }}</h5>
+                            <p class="card-text">{{ doglist.comment }}</p>
+                        </div>
                     {% if doglist.user_id == userid %}
                         <div>
                             <button onclick="modify_posting('{{ doglist.post_id }}')">수정</button>
@@ -218,10 +225,10 @@
                             <button onclick="delete_posting('{{ doglist.post_id }}')">삭제</button>
                         </div>
                     {% endif %}
-                </div>
-
+                    </div>
                 </div>
             {% endfor %}
+        </div>
     </div>
 
 </header>
