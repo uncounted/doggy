@@ -119,9 +119,16 @@
         function post_update() {
             let doggy_name = $('#dog_name').val()
             let posting_doggy = $('#boast_doggy').val()
+            let form_data = new FormData()
+
 
             let file = $('#file')[0].files[0]
-            let form_data = new FormData()
+
+            if ($('#file')[0].files[0] == null) {
+                alert("첨부 파일은 필수!");
+                $("#isFile").focus();
+                return;
+            }
 
             form_data.append("file_give", file)
             form_data.append("doggyname_give", doggy_name)

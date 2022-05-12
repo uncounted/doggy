@@ -120,10 +120,15 @@
             let postid = post_id
             let posting_doggy = $('#boast_doggy').val()
             let notposting = not_posting
-            console.log(posting_doggy)
+            let form_data = new FormData()
 
             let file = $('#file')[0].files[0]
-            let form_data = new FormData()
+
+            if ($('#file')[0].files[0] == null) {
+                alert("첨부 파일은 필수!");
+                $("#isFile").focus();
+                return;
+            }
 
             form_data.append("file_give", file)
             form_data.append("post_id_give", postid)
@@ -219,7 +224,8 @@
                 </div>
             </div>
         </div>
-        <button onclick="post_update('{{postings[0].post_id}}','{{ postings[0].comment}}')" type="button" class="btn btn-primary">수정</button>
+        <button type="button" onclick="post_update('{{postings[0].post_id}}','{{ postings[0].comment}}')" class="btn btn-outline-primary">수정</button>
+        <button type="button" class="btn btn-outline-primary"><a href="/">돌아가기</a></button>
     </div>
 </div>
 
