@@ -268,9 +268,11 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ doglist.dog_name }}</h5>
+
                             <h5 class="heart" id="heart" onclick="like_up({{ doglist.post_id }}, '{{ userid }}')">
                                 <span id="love" class="material-icons" onclick="love()" type="button">favorite
                                 </span>  {{ doglist.likes_cnt }}</h5>
+
                             <p class="card-text">{{ doglist.comment }}</p>
                         </div>
                         <div class="btn_gruop">
