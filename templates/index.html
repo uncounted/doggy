@@ -92,21 +92,31 @@
             display: grid;
             grid-auto-flow: column;
             margin-right: 10px;
-            margin-left: 10px;
+            margin-left: -8px;
             padding: 10px;
+        }
+
+        .btn-outline-primary {
+            color: #0d6efd;
+            border-color: #0d6efd;
+            border-radius: 20px;
+            margin-left: 18px;
         }
 
     </style>
 
     <script>
         {#로그아웃#}
+
         function logout() {
             $.removeCookie('mytoken', {path: '/'});
             alert('로그아웃!');
             window.location.href = "/";
         }
+
         {#로그아웃#}
         {#서치 시작#}
+
         function search() {
             let search = $('#search').val()
             console.log(search)
@@ -116,8 +126,10 @@
                 window.location.href = `/searching/${search}`
             }
         }
+
         {#서치 끝#}
         {#포스팅 함수#}
+
         function delete_posting(post_id) {
             let postid = post_id
 
@@ -138,28 +150,11 @@
         function modify_posting(post_id) {
             window.location.href = `/modify/${post_id}`
         }
+
         {#포스팅 함수 끝#}
         $(function () {
             $('.carousel-item').first().addClass('active')
         })
-
-        {# 좋아요 업! #}
-        function like_up(post_id, user_id) {
-            let post = post_id
-            let user = user_id
-            console.log(post, user)
-            $.ajax({
-                type: "POST",
-                url: "/api/likes/update",
-                data: {
-                    post_id_give: post,
-                    user_id_give: user,
-                },
-                success: function (response) {
-                    window.location.reload()
-                }
-            });
-        }
 
     </script>
 
@@ -190,8 +185,6 @@
             </div>
         </div>
     </div>
-
-</header>
 
     <div class="week">
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -240,9 +233,8 @@
                             <img src="../static/{{ doglist.img1 }}" style="max-width: 100%; height: 200px;"
                                  class="card-img-top">
                         </div>
-                        <div class="card-body" id="card">
-                            <h5 class="card-title">{{ doglist.dog_name }}</h5>
-                            <h5 class="heart" id="heart" onclick="like_up({{ doglist.post_id }}, '{{ userid }}')">(하트)X{{ doglist.likes_cnt }}</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ doglist.dog_name }} (하트)X{{ doglist.likes_cnt }}</h5>
                             <p class="card-text">{{ doglist.comment }}</p>
                         </div>
                         <div class="btn_gruop">
@@ -260,8 +252,7 @@
             {% endfor %}
         </div>
     </div>
-
-
+</header>
 
 
 </body>
