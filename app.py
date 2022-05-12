@@ -59,12 +59,9 @@ def join():
 
 @app.route('/searching/<keyword>')
 def search(keyword):
-    boards = db.board.find({'dog_name':keyword}, {'_id':False})
-    print(boardsg)
-    for post in boards:
-        print(post['dog_name'])
-        if post is None:
-            boards = 'empty'
+    boards = list(db.board.find({'dog_name':keyword}, {'_id':False}))
+    if not boards:
+        boards = 'empty'
 
     result = checklogin()
     if result == 'logout':
